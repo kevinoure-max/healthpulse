@@ -17,14 +17,14 @@ def compute_stats(df: pd.DataFrame) -> dict:
     data_points = len(df["value"])
 
     return {
-        "latest_year": latest_year,
-        "latest_value": round(latest_value, 2),
-        "min_value": round(min_value, 2),
-        "max_value": round(max_value, 2),
-        "min_year": min_year,
-        "max_year": max_year,
-        "change_absolute": round(change_absolute, 2),
-        "change_pct": round(change_pct, 2),
-        "mean": round(mean, 2),
-        "data_points": data_points,
+        "latest_year": int(latest_year),
+        "latest_value": float(round(latest_value, 2)),
+        "min_value": float(round(min_value, 2)),
+        "max_value": float(round(max_value, 2)),
+        "min_year": int(min_year),
+        "max_year": int(max_year),
+        "change_absolute": float(round(change_absolute, 2)),
+        "change_pct": float(round(change_pct, 2)),
+        "mean": float(round(mean, 2)),
+        "data_points": int(data_points),
     }
