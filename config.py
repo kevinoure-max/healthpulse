@@ -9,7 +9,7 @@ METRICS = list(SOURCES.keys())
 
 COLUMN_MAP = {
     "life_expectancy": "Life expectancy",
-    "obesity": "Prevalence of obesity among adults, BMI >= 30 (crude estimate) (%) - Sex: both sexes - Age group: 18+ years of age",
+    "obesity": "Prevalence of obesity among adults, BMI >= 30 (crude estimate) (%) - Sex: both sexes - Age group: 18+  years of age",
     "child_mortality": "Under-five mortality rate (selected)",
     "healthcare_spending": "Public health expenditure as a share of GDP",
 }

@@ -2,6 +2,7 @@ import pandas as pd
 import psycopg2
 import os
 from dotenv import load_dotenv
+from psycopg2.extras import execute_values
 
 load_dotenv()
 
@@ -10,7 +11,8 @@ def get_connection():
     url = os.getenv("DATABASE_URL")
     if not url:
         raise ValueError("DATABASE_URL is not set")
-    return psycopg2.connect(url, connect_timeout=10)
+    conn = psycopg2.connect(url, connect_timeout=10)
+    return conn
 
 
 def init_db():
@@ -37,14 +39,20 @@ def init_db():
 def save_indicators(df, metric):
     conn = get_connection()
     cursor = conn.cursor()
-    for _, row in df.iterrows():
-        cursor.execute(
-            """
-            INSERT INTO indicators (country, code, year, metric, value)
-            VALUES (%s, %s, %s, %s, %s)
-            """,
-            (row["Entity"], row["Code"], row["Year"], metric, row["value"]),
-        )
+    records = [
+        (row["Entity"], row["Code"], int(row["Year"]), metric, float(row["value"]))
+        for _, row in df.iterrows()
+    ]
+
+    execute_values(
+        cursor,
+        """
+        INSERT INTO indicators (country, code, year, metric, value)
+        VALUES %s
+        """,
+        records,
+    )
+
     conn.commit()
     cursor.close()
     conn.close()
@@ -78,4 +86,4 @@ def get_indicators(metric, country_code=None, year_start=None, year_end=None):
     cursor.close()
     conn.close()
     columns = ["id", "country", "code", "year", "metric", "value", "created_at"]
-    return pd.DataFrame(rows, columns)
+    return pd.DataFrame(rows, columns=columns)
