@@ -5,7 +5,7 @@ from config import SOURCES, COLUMN_MAP
 
 
 def fetch_metric(metric: str, country_code: str = None) -> pd.DataFrame:
-    if metric not in list(SOURCES):
+    if metric not in SOURCES:
         raise ValueError(
             f"Error: {metric} cannot be found. Available metrics : {', '.join(SOURCES)}"
         )

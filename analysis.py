@@ -2,14 +2,14 @@ import pandas as pd
 
 
 def compute_stats(df: pd.DataFrame) -> dict:
-    latest_year = df["Year"].max()
-    latest_value = df[df["Year"] == latest_year]["value"].values[0]
+    latest_year = df["year"].max()
+    latest_value = df[df["year"] == latest_year]["value"].values[0]
     min_value = df["value"].min()
     max_value = df["value"].max()
-    min_year = df["Year"].min()
+    min_year = df["year"].min()
     max_year = latest_year
 
-    earliest_value = df[df["Year"] == min_year]["value"].values[0]
+    earliest_value = df[df["year"] == min_year]["value"].values[0]
     change_absolute = latest_value - earliest_value
     change_pct = ((latest_value - earliest_value) / earliest_value) * 100
 
