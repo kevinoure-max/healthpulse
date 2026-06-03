@@ -12,7 +12,7 @@ MODEL_NAME = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6")
 
 class AnthropicProvider(LLMProvider):
     def generate_analysis(
-        self, metric: str, country: str, stats: dict, question: str = None
+        self, metric: str, country: str, stats: dict, question: str | None = None
     ) -> str:
 
         client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
