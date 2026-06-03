@@ -35,6 +35,9 @@ Instructions :
 - Do not make medical diagnoses or recommandations
 - Focus on trend and factual observations
 - If the trend is concerning, note it factually without alarmism
+- ONLY use information present in the data provided above
+- Do NOT make comparisons with other countries unless their data is explicitly provided
+- Do NOT make inferences beyond what the numbers directly show
 """
         response = client.messages.create(
             model=MODEL_NAME,
