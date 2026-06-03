@@ -1,5 +1,5 @@
 # Database
-#...db
+*.db
 
 # Virtual env
 .venv/
