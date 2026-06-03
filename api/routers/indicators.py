@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 from database import get_indicators
 from analysis import compute_stats
 
@@ -20,11 +21,14 @@ def read_indicators(
             status_code=404, detail="No data found for the requested filters"
         )
 
-    return {
-        "metric": metric,
-        "count": len(df),
-        "data": df.to_dict(orient="records"),
-    }
+    return JSONResponse(
+        content={
+            "metric": metric,
+            "count": len(df),
+            "data": df.to_dict(orient="records"),
+        },
+        media_type="application/json; charset=utf-8",
+    )
 
 
 @router.get("/{metric}/stats")
@@ -35,8 +39,11 @@ def indicator_stats(metric: str, country: str | None = None):
             status_code=404, detail="No data found for the requested filters"
         )
 
-    return {
-        "metric": metric,
-        "country": country.upper() if country else None,
-        "stats": compute_stats(df),
-    }
+    return JSONResponse(
+        content={
+            "metric": metric,
+            "country": country.upper() if country else None,
+            "stats": compute_stats(df),
+        },
+        media_type="application/json; charset=utf-8",
+    )

@@ -1,6 +1,7 @@
 from database import get_indicators
 from analysis import compute_stats
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 from llm.anthropic_provider import AnthropicProvider
 
 
@@ -29,9 +30,12 @@ def analyze_indicators(
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"LLM service unavailable: {e}")
 
-    return {
-        "metric": metric,
-        "country": country.upper(),
-        "stats": stats,
-        "analysis": analysis,
-    }
+    return JSONResponse(
+        content={
+            "metric": metric,
+            "country": country.upper(),
+            "stats": stats,
+            "analysis": analysis,
+        },
+        media_type="application/json; charset=utf-8",
+    )
